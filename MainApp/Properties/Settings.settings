@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OnlineStoreScrappper.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="scraper_getlinks_url" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://mobility.returnmoneyonline.com/api/getlinks</Value>
+    </Setting>
+    <Setting Name="scraper_postprice_url" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://mobility.returnmoneyonline.com/api/setprice?id={0}&amp;price={1}</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
