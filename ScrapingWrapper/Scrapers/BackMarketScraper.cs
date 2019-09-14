@@ -25,11 +25,10 @@ namespace ScrapingWrapper.Scrapers
         }
         public override async Task<string> doScrapAsync(string pageUrl = null)
         {
-            return await Task.Factory.StartNew(() => {
                 try
                 {
                     if (pageUrl == null) pageUrl = ScrapUrl;
-                    WebPage webPage = Browser.NavigateToPage(new Uri(pageUrl));
+                    WebPage webPage = await Browser.NavigateToPageAsync(new Uri(pageUrl));
                     string xpath1 = "//*[@id=\"main_container\"]/div/div/div[1]/div[2]/div[2]/ul/li[1]/div[2]/div[1]";
                     string xpath2 = "//*[@id=\"main_container\"]/div/div/div[1]/div[3]/div[2]/ul/li[1]/div[2]/div[1]";
                     var node = webPage.Html.SelectSingleNode(xpath1) == null ? webPage.Html.SelectSingleNode(xpath2) : webPage.Html.SelectSingleNode(xpath1);
@@ -42,7 +41,6 @@ namespace ScrapingWrapper.Scrapers
                 {
                     return null;
                 }
-            });
         }
 
     }

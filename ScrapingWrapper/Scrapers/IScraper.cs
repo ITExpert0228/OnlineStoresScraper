@@ -64,3 +64,4 @@ namespace ScrapingWrapper.Scrapers
         int getId();
     }
 }
+

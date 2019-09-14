@@ -9,7 +9,7 @@ namespace ScrapingWrapper
     public class WrapperBase
     {
         //public const string DefaultBaseAddress = "https://ticketmaster.com/";
-        private Timer timer;
+        private static Timer timer;
         public WrapperBase() {
             timer = new Timer(1000);
             timer.Elapsed += async (sender, e) => await TimeHandler();
@@ -89,12 +89,17 @@ namespace ScrapingWrapper
             {
                 int id = one.getId();
                 string price = await one.doScrapAsync();
-                Console.WriteLine("\n Handler is working...." + one.Name + (id) +" & " + price +"\n");
+                Console.WriteLine("Handler is working...." + one.Name + (id) +" & " + price );
                 //Saving price into database
                 if (price != null) {
                     bool rs = Utility.UpdateProductPriceByID(id.ToString(), price, fetchTime);
-                    if (!rs) Console.WriteLine("\n HTTP not OK ->" + one.Name + (id) + " & " + price + "\n");
+                    if (!rs) Console.WriteLine("HTTP not OK ->" + one.Name + (id) + " & " + price );
                 }
+                int nDelay = (int)timer.Interval / (scraperList.Count + 1) /2;
+                int minDelay = 5000;
+                nDelay = nDelay > minDelay ? nDelay : minDelay;
+                await Task.Delay(nDelay);
+                //System.Threading.Thread.Sleep(5000);
             }
             
         }

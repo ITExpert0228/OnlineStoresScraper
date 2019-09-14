@@ -15,7 +15,7 @@ namespace ScrapingWrapper.Scrapers
             Name = "Amazon";
             Id = id;
 
-            ScrapUrl = surl == null ? @"https://www.amazon.com/dp/B01NC0AXHT/ref=cm_sw_r_cp_api_i_j0aDDb0EHMGXX" : surl;
+            ScrapUrl = (surl == null) ? @"https://www.amazon.com/dp/B01NC0AXHT/ref=cm_sw_r_cp_api_i_j0aDDb0EHMGXX" : surl;
 
             Browser.AllowMetaRedirect = true;
             Browser.AllowAutoRedirect = true;
@@ -32,16 +32,15 @@ namespace ScrapingWrapper.Scrapers
          */
         public override async Task<string> doScrapAsync(string pageUrl = null)
         {
-            return await Task.Factory.StartNew(() => {
-                if (pageUrl == null) pageUrl = ScrapUrl;
-                //string aaa = Browser.DownloadString(new Uri(pageUrl));
-                WebPage webPage = Browser.NavigateToPage(new Uri(pageUrl));
-                
-                var node = webPage.Html.SelectSingleNode("//*[@id=\"comparison_price_row\"]/td[1]/span/span[2]/span[2]/text()");
-                if (node == null) return null;
-                string res = node.InnerHtml;
-                return res;
-            });
+            if (pageUrl == null) pageUrl = ScrapUrl;
+            //string aaa = Browser.DownloadString(new Uri(pageUrl));
+            WebPage webPage = null;
+            await Task.Factory.StartNew(() => webPage = Browser.NavigateToPage(new Uri(pageUrl)));
+
+            var node = webPage.Html.SelectSingleNode("//*[@id=\"comparison_price_row\"]/td[1]/span/span[2]/span[2]/text()");
+            if (node == null) return null;
+            string res = node.InnerHtml;
+            return res;
         }
     }
 }
