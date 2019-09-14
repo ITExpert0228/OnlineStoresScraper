@@ -21,7 +21,7 @@ namespace OnlineStoreScrappper
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            btnStop.Enabled = false;
+            btnStop.Enabled = false; 
             btnStart.Enabled = true;
         }
 
